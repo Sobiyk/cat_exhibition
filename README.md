@@ -18,3 +18,8 @@ docker-compose up -d --build
 ```
 http://localhost:8000/docs
 ```
+
+### Запустить тесты
+```
+pytest
+```
