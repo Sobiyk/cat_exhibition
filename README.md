@@ -1,4 +1,4 @@
-# cities_info
+# Cats exhibition admin
 
 
 ### Шаблон заполнения .env:
