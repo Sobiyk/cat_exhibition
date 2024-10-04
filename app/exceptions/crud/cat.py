@@ -1,0 +1,2 @@
+class BreedNotFoundException(Exception):
+    pass
