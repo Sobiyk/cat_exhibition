@@ -34,7 +34,9 @@ async def test_create_cat(ac: AsyncClient):
     )
 
     assert new_cat_wrong_breed.status_code == status.HTTP_404_NOT_FOUND
-    assert new_cat_wrong_breed.json() == {'detail': 'Породы с названием wrong не найдено.'}
+    assert new_cat_wrong_breed.json() == {
+        'detail': 'Породы с названием wrong не найдено.'
+    }
 
 
 async def test_list_cats(ac: AsyncClient):
