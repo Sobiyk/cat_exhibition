@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     app_name: str
     app_version: str
     database_url: str
+    test_database_url: str
 
 
 settings = Settings()

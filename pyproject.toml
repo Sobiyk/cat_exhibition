@@ -8,3 +8,8 @@ exclude = [
     "migrations/",
     "app/core/base.py",
 ]
+[tool.pytest.ini_options]
+pythonpath = [
+    ".", "src",
+]
+asyncio_mode="auto"

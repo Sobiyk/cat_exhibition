@@ -6,7 +6,7 @@
 ```
 APP_NAME='string'
 APP_VERSION='1.0.0'
-DATABASE_URL='postgresql+asyncpg://postgres:postgres@localhost:1234/db_name'
+DATABASE_URL='postgresql+asyncpg://postgres:postgres@localhost:1234/db'
 ```
 
 ### Запустить сборку контейнеров

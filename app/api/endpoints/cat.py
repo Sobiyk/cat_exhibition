@@ -108,7 +108,8 @@ async def create_cat(
 
 @router.patch(
     '/{cat_id}',
-    response_model=CatDB
+    response_model=CatDB,
+    status_code=status.HTTP_200_OK
 )
 async def update_cat(
     cat_id: Annotated[int, Path(gt=0)],
@@ -150,7 +151,8 @@ async def update_cat(
 
 
 @router.delete(
-    '/{cat_id}'
+    '/{cat_id}',
+    status_code=status.HTTP_204_NO_CONTENT
 )
 async def remove_cat(
     cat_id: Annotated[int, Path(gt=0)],
