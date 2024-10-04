@@ -14,12 +14,6 @@ DATABASE_URL='postgresql+asyncpg://postgres:postgres@localhost:1234/db'
 docker-compose up -d --build
 ```
 
-### Применить миграции
-```
-docker exec -it pets_test_assigment-web-1 bash
-alembic upgrade head
-```
-
 ### Перейти в документацию
 ```
 http://localhost:8000/docs
