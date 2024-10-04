@@ -109,7 +109,7 @@ async def create_cat(
     response_model=CatDB
 )
 async def update_cat(
-    cat_id: int,
+    cat_id: Annotated[int, Path(gt=0)],
     update_data: CatUpdate,
     session: AsyncSession = Depends(get_async_session)
 ):
@@ -149,7 +149,7 @@ async def update_cat(
     '/{cat_id}'
 )
 async def remove_cat(
-    cat_id: int,
+    cat_id: Annotated[int, Path(gt=0)],
     session: AsyncSession = Depends(get_async_session)
 ):
     """
