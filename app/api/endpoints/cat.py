@@ -60,6 +60,7 @@ async def get_cat_info(
 
     Исключения:
         HTTPException (404): Если котик с указанным id не найден.
+        HTTPException (422): Если указан некорректный id котика.
     """
     try:
         cat = await cat_crud.get(cat_id, session)
@@ -93,6 +94,7 @@ async def create_cat(
 
     Исключения:
         HTTPException (404): Если породы с указанным названием не найдено.
+        HTTPException (422): Если данные котика не прошли валидацию.
     """
     try:
         cat = await cat_crud.create(cat_in, session)
@@ -127,6 +129,8 @@ async def update_cat(
     Исключения:
         HTTPException (404): Если котик с указанным id не найден.
         HTTPException (404): Если породы с указанным именем не найдено.
+        HTTPException (422): Если указан некорректный id котика.
+        HTTPException (422): Если данные для обновления не прошли валидацию.
     """
     try:
         cat = await cat_crud.get(cat_id, session)
@@ -163,6 +167,7 @@ async def remove_cat(
 
     Исключения:
         HTTPException (404): Если котик с указанным id не найден.
+        HTTPException (422): Если указан некорректный id котика.
     """
     try:
         cat = await cat_crud.get(cat_id, session)
