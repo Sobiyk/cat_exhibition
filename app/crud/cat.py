@@ -34,8 +34,6 @@ class CatCRUD(CRUDBase):
         breed_id = await breed_crud.get_id_by_name(
             breed_name, session
         )
-        # if breed_id is None:
-        #     raise BreedNotFoundException(breed_name)
         obj_in_data['breed_id'] = breed_id
         db_obj = self.model(**obj_in_data)
         session.add(db_obj)
@@ -49,8 +47,6 @@ class CatCRUD(CRUDBase):
         breed_name = update_dict.pop('breed', None)
         if breed_name is not None:
             breed_id = await breed_crud.get_id_by_name(breed_name, session)
-            # if breed_id is None:
-            #     raise BreedNotFoundException(breed_name)
             update_dict['breed_id'] = breed_id
         for field in obj_data:
             if field in update_dict:
@@ -62,14 +58,4 @@ class CatCRUD(CRUDBase):
         return db_obj
 
 
-# class BreedCRUD(CRUDBase):
-
-#     async def get_id_by_name(self, name, session: AsyncSession):
-#         breed_id = await session.execute(
-#             select(Breed.id).where(Breed.name == name)
-#         )
-#         return breed_id.scalar()
-
-
 cat_crud = CatCRUD(Cat)
-# breed_crud = BreedCRUD(Breed)

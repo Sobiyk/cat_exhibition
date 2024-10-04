@@ -2,6 +2,8 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.exceptions.crud.base import ObjectIDNotFoundException
+
 
 class CRUDBase:
     def __init__(self, model):
@@ -12,7 +14,10 @@ class CRUDBase:
             select(self.model)
             .where(self.model.id == obj_id)
         )
-        return db_obj.scalars().first()
+        obj = db_obj.scalars().first()
+        if obj is None:
+            raise ObjectIDNotFoundException(obj_id)
+        return obj
 
     async def get_multi(self, session: AsyncSession):
         all_objects = await session.execute(select(self.model))

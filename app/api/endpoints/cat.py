@@ -7,7 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
 from app.crud.cat import cat_crud
-from app.exceptions.crud.cat import BreedNotFoundException
+from app.exceptions.crud.base import ObjectIDNotFoundException
+from app.exceptions.crud.breed import BreedNotFoundException
 from app.schemas.cat import CatCreate, CatDB, CatUpdate
 
 router = APIRouter(
@@ -60,11 +61,12 @@ async def get_cat_info(
     Исключения:
         HTTPException (404): Если котик с указанным id не найден.
     """
-    cat = await cat_crud.get(cat_id, session)
-    if cat is None:
+    try:
+        cat = await cat_crud.get(cat_id, session)
+    except ObjectIDNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Котика с указанным id не существует'
+            detail=str(e)
         )
     return cat
 
@@ -94,10 +96,10 @@ async def create_cat(
     """
     try:
         cat = await cat_crud.create(cat_in, session)
-    except BreedNotFoundException:
+    except BreedNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Породы с таким именем не найдено.'
+            detail=str(e)
         )
     return cat
 
@@ -126,18 +128,19 @@ async def update_cat(
         HTTPException (404): Если котик с указанным id не найден.
         HTTPException (404): Если породы с указанным именем не найдено.
     """
-    cat = await cat_crud.get(cat_id, session)
-    if cat is None:
+    try:
+        cat = await cat_crud.get(cat_id, session)
+    except ObjectIDNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Котика с таким id нет в нашей базе'
+            detail=str(e)
         )
     try:
         cat_updated = await cat_crud.update(update_data, cat, session)
-    except BreedNotFoundException:
+    except BreedNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Породы с таким именем не найдено.'
+            detail=str(e)
         )
     return cat_updated
 
@@ -161,11 +164,12 @@ async def remove_cat(
     Исключения:
         HTTPException (404): Если котик с указанным id не найден.
     """
-    cat = await cat_crud.get(cat_id, session)
-    if cat is None:
+    try:
+        cat = await cat_crud.get(cat_id, session)
+    except ObjectIDNotFoundException as e:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='Котика с таким id нет в нашей базе'
+            detail=str(e)
         )
     await cat_crud.remove(cat, session)
     return

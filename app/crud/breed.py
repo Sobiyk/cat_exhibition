@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from .base import CRUDBase
-from app.exceptions.crud.cat import BreedNotFoundException
+from app.exceptions.crud.breed import BreedNotFoundException
 from app.models.cat import Breed
 
 
