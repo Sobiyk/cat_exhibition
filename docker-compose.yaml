@@ -4,9 +4,15 @@ services:
 
   web:
     build: ./
-    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    command: >
+      sh -c "
+      alembic upgrade head &&
+      psql postgres://postgres:postgres@db:5432/db < /docker-entrypoint-initdb.d/seed_data.sql &&
+      uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+      "
     volumes:
       - ./:/usr/src/app
+      - ./seed_data.sql:/docker-entrypoint-initdb.d/seed_data.sql
     ports:
       - 8000:8000
     environment:
